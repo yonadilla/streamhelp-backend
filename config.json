@@ -1,0 +1,9 @@
+{
+    "app" : {
+        "name" : "stream-help"
+    },
+    "web" : {
+        "prefork" : false,
+        "port" : 3000
+    }
+}
