@@ -2,11 +2,13 @@ package config
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func NewDatabase(viper *viper.Viper, log *logrus.Logger) *gorm.DB {
@@ -31,7 +33,13 @@ func NewDatabase(viper *viper.Viper, log *logrus.Logger) *gorm.DB {
 	)
 
 	db , err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		
+		Logger: logger.New(&logrusWriter{Logger: log}, logger.Config{
+			SlowThreshold: time.Second * 5,
+			Colorful: false,
+			IgnoreRecordNotFoundError: true,
+			ParameterizedQueries: true,
+			LogLevel: logger.Info,
+		}),
 	})
 
 	if err != nil {
