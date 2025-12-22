@@ -30,11 +30,21 @@ func NewDatabase(viper *viper.Viper, log *logrus.Logger) *gorm.DB {
 	timezone,
 	)
 
-	db , err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db , err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		
+	})
 
 	if err != nil {
 		log.Fatalf("failed to connect database : %v ", err)
 	}
 
 	return  db
+}
+
+type logrusWriter struct {
+	Logger *logrus.Logger
+}
+
+func (l *logrusWriter) Printf(message string, args ...interface{}) {
+	l.Logger.Tracef(message, args...)
 }
