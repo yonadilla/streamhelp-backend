@@ -5,5 +5,15 @@
     "web" : {
         "prefork" : false,
         "port" : 3000
+    },
+    "database" : {
+        "dbname" : "stream_helper",
+        "user" : "postgres",
+        "host" : " localhost",
+        "port" : 5432,
+        "sslmode" : "prefer",
+        "connect_timeout" : 10,
+        "timezone" : "Asia/Jakarta"
     }
+
 }
