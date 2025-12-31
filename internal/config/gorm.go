@@ -13,25 +13,16 @@ import (
 
 func NewDatabase(viper *viper.Viper, log *logrus.Logger) *gorm.DB {
 	dbname := viper.GetString("database.dbname")
-	host := viper.GetString("database.host")
-	user := viper.GetString("database.user")
-	password := viper.GetString("database.password")
-	port := viper.GetString("database.port")
-	sslmode := viper.GetString("database.sslmode")
-	connect_timeout := viper.GetString("database.connect_timeout")
-	timezone := viper.GetString("database.timezone")
-
-	dsn := fmt.Sprintf( "host=%s user=%s password=%s dbname=%s port=%s sslmode=%s connect_timeout=%s TimeZone=%s",
-	host,
-	user,
-	password,
-	dbname,
-	port,
-	sslmode,
-	connect_timeout,
-	timezone,
-	)
-
+    user := viper.GetString("database.user")
+    password := viper.GetString("database.password")
+    sslmode := viper.GetString("database.sslmode")
+    timezone := viper.GetString("database.timezone")
+    host := fmt.Sprintf("%s", viper.Get("database.host")) 
+    port := fmt.Sprintf("%v", viper.Get("database.port"))
+    timeout := fmt.Sprintf("%v", viper.Get("database.connect_timeout"))
+	
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s connect_timeout=%s TimeZone=%s",
+        host, user, password, dbname, port, sslmode, timeout, timezone)
 	db , err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.New(&logrusWriter{Logger: log}, logger.Config{
 			SlowThreshold: time.Second * 5,
@@ -46,7 +37,7 @@ func NewDatabase(viper *viper.Viper, log *logrus.Logger) *gorm.DB {
 		log.Fatalf("failed to connect database : %v ", err)
 	}
 
-	return  db
+	return db
 }
 
 type logrusWriter struct {
