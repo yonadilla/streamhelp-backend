@@ -17,9 +17,9 @@ func NewDatabase(viper *viper.Viper, log *logrus.Logger) *gorm.DB {
     password := viper.GetString("database.password")
     sslmode := viper.GetString("database.sslmode")
     timezone := viper.GetString("database.timezone")
-    host := fmt.Sprintf("%s", viper.Get("database.host")) 
-    port := fmt.Sprintf("%v", viper.Get("database.port"))
-    timeout := fmt.Sprintf("%v", viper.Get("database.connect_timeout"))
+    host := viper.GetString("database.host")
+    port := viper.GetString("database.port")
+    timeout := viper.GetString("database.connect_timeout")
 	
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s connect_timeout=%s TimeZone=%s",
         host, user, password, dbname, port, sslmode, timeout, timezone)
