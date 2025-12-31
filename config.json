@@ -6,12 +6,16 @@
         "prefork" : false,
         "port" : 3000
     },
+  "log": {
+    "level": 6
+  },
     "database" : {
         "dbname" : "stream_helper",
         "user" : "postgres",
-        "host" : " localhost",
+        "host" : "localhost",
+        "password" : "postgresql123,",
         "port" : 5432,
-        "sslmode" : "prefer",
+        "sslmode" : "disable",
         "connect_timeout" : 10,
         "timezone" : "Asia/Jakarta"
     }
